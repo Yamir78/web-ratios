@@ -1,0 +1,141 @@
+:root{
+  --bg:#0f1115; --card:#171a21; --ink:#e9eef5; --muted:#9aa3b2;
+  --brand:#39b37f; --brand-2:#2b86ff; --ring:rgba(43,134,255,.25);
+  --radius:16px;
+}
+
+/* Base */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; font-family:system-ui,Inter,Segoe UI,Roboto,Arial;
+  color:var(--ink); background:linear-gradient(180deg,#0b0d11,var(--bg));
+}
+
+/* Header */
+.site-header{
+  padding:clamp(16px,4vw,28px);
+  display:flex; flex-direction:column; gap:10px;
+}
+.site-header h1{ margin:0; font-size:clamp(22px,3.6vw,34px); font-weight:800 }
+.site-header h1 span{ color:var(--brand) }
+.subtitle{ margin:0; color:var(--muted) }
+.header-actions{ display:flex; gap:10px; flex-wrap:wrap }
+
+/* Buttons */
+.btn{
+  appearance:none; border:1px solid #303544; background:#222734; color:var(--ink);
+  padding:10px 14px; border-radius:999px; cursor:pointer; font-weight:600; transition:.2s;
+}
+.btn:hover{ transform:translateY(-1px) }
+.btn.primary{ background:linear-gradient(90deg,var(--brand),var(--brand-2)); border-color:transparent }
+.btn.ghost{ background:transparent }
+.btn.small{ padding:6px 10px; font-size:.9rem }
+
+/* Sections / Cards */
+.panel{ padding:clamp(12px,3.2vw,22px) }
+.hidden{ display:none }
+.cards-grid{
+  display:grid; gap:16px;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+}
+.card{
+  background:var(--card); border:1px solid #2a3040; border-radius:16px;
+  padding:18px; display:flex; flex-direction:column; gap:12px;
+  box-shadow:0 10px 24px rgba(0,0,0,.25);
+}
+.card header h2{ margin:.2rem 0 .1rem; font-size:1.1rem }
+.muted{ color:var(--muted) }
+
+.inputs{ display:grid; gap:10px }
+label{ display:flex; flex-direction:column; gap:6px; font-weight:600 }
+input[type="number"], input[type="text"], select{
+  background:#0f131c; color:var(--ink); border:1px solid #2a3040; border-radius:10px; padding:10px 12px; outline:none;
+}
+input[type="number"]:focus, input[type="text"]:focus, select:focus{
+  border-color:var(--brand-2); box-shadow:0 0 0 6px var(--ring);
+}
+.actions{ display:flex; gap:8px; flex-wrap:wrap }
+
+.result{
+  display:block; background:#0c1017; border:1px dashed #394055;
+  padding:10px 12px; border-radius:10px; min-height:44px;
+  font-variant-numeric:tabular-nums;
+}
+.hint{ color:var(--muted); margin:.3rem 0 0; font-size:.9rem }
+
+/* Conclusion */
+.conclusion{ padding:clamp(12px,3.2vw,22px) }
+.conclusion-text{
+  background:linear-gradient(180deg,#101521,#0b0f18);
+  border:1px solid #2a3040; border-radius:16px; padding:16px; line-height:1.55;
+}
+
+/* Footer */
+.site-footer{ padding:24px; text-align:center; color:var(--muted) }
+
+/* ======= Tabla Margen de Ventas ======= */
+.table-tools{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px }
+.table-wrap{ overflow:auto; border:1px solid #2a3040; border-radius:12px }
+table{ width:100%; border-collapse:collapse; background:#0c1017 }
+th,td{ border-bottom:1px solid #222a3a; padding:10px 8px; text-align:left; vertical-align:middle }
+thead th{ position:sticky; top:0; background:#121727; z-index:1 }
+tfoot th{ background:#0f131c }
+td input, td select{ width:100% }
+
+/* ======= RESPONSIVE BREAKPOINTS ======= */
+
+/* Tablet: centra encabezado */
+@media (min-width: 860px){
+  .site-header{ align-items:center; text-align:center }
+}
+
+/* Móvil: la tabla se convierte en tarjetas apiladas */
+@media (max-width: 680px){
+  .table-wrap{ border:none; }
+  table{ border:0; background:transparent }
+  thead{ display:none }           /* ocultamos el encabezado */
+  tfoot{ display:block; width:100% }
+  tbody, tr, td, tfoot, th{ display:block; width:100% }
+
+  tbody tr{
+    background:var(--card);
+    border:1px solid #2a3040;
+    border-radius:16px;
+    margin-bottom:12px;
+    box-shadow:0 8px 18px rgba(0,0,0,.25);
+    overflow:hidden;
+  }
+
+  tbody td{
+    display:grid;
+    grid-template-columns: 140px 1fr; /* etiqueta + valor */
+    gap:10px;
+    padding:12px 14px;
+    border-bottom:1px solid #222a3a;
+  }
+  tbody td:last-child{ border-bottom:0 }
+
+  /* Etiquetas por columna (usando nth-child) */
+  tbody td:nth-child(1)::before { content:"Frecuencia"; color:var(--muted) }
+  tbody td:nth-child(2)::before { content:"Producto/servicio"; color:var(--muted) }
+  tbody td:nth-child(3)::before { content:"Precio de venta"; color:var(--muted) }
+  tbody td:nth-child(4)::before { content:"Costo unitario"; color:var(--muted) }
+  tbody td:nth-child(5)::before { content:"Cantidad vendida"; color:var(--muted) }
+  tbody td:nth-child(6)::before { content:"Ingreso"; color:var(--muted) }
+  tbody td:nth-child(7)::before { content:"Costo total"; color:var(--muted) }
+  tbody td:nth-child(8)::before { content:"Utilidad"; color:var(--muted) }
+  tbody td:nth-child(9)::before { content:"% Margen"; color:var(--muted) }
+
+  /* Totales al final como card */
+  tfoot tr:first-child{
+    background:#0f131c; border:1px solid #2a3040; border-radius:16px; margin:14px 0;
+    padding:10px 12px;
+  }
+  tfoot tr:first-child th{
+    display:grid; grid-template-columns: 1fr 1fr; gap:8px;
+    border:0; padding:6px 10px;
+  }
+  tfoot tr:first-child th:nth-child(1){ grid-column:1 / -1; text-align:left }
+  #resumenCostoMargen{ display:block; padding:10px 4px }
+}
